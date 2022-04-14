@@ -1,4 +1,6 @@
+using Dominio;
 using Microsoft.AspNetCore.Mvc;
+using Persitencia;
 
 namespace WebAPI.Controllers;
 
@@ -6,10 +8,16 @@ namespace WebAPI.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    [HttpGet]
-    public IEnumerable<string> Get()
+    private readonly CursosOnlineContext context;
+
+    public WeatherForecastController(CursosOnlineContext _context)
     {
-        string[] nombres = new[] {"Fabian","Carlos", "Diana","Nadia"};
-        return nombres;
+        this.context = _context;
+    }
+    
+    [HttpGet]
+    public IEnumerable<Curso> Get()
+    {
+        return context.Curso.ToList();
     }
 }
