@@ -11,5 +11,7 @@ namespace Dominio
         public decimal Promocion { get; set; }
 
         public int CursoId { get; set; }
+
+        public Curso Curso { get; set; }
     }
 }

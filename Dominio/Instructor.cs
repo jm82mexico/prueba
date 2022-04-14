@@ -11,5 +11,7 @@ namespace Dominio
         public string Grado { get; set; }
 
         public byte[] FotoPerfil { get; set; }
+
+        public ICollection<CursoInstructor> CursoLink { get; set; }
     }
 }

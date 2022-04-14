@@ -5,5 +5,9 @@ namespace Dominio
         public int CursoId { get; set; }
 
         public int InstructorId { get; set; }
+
+        public Curso Curso { get; set; }
+
+        public Instructor Instructor { get; set; }
     }
 }
