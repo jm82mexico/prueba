@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Aplicacion.Cursos;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,10 @@ namespace WebAPI
 
             //Configurar la inyección de dependencias
             services.AddMediatR(typeof (Consulta.Manejador).Assembly);
+            services
+                .AddControllers()
+                .AddFluentValidation(cfg =>
+                    cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
             services.AddControllers();
         }
