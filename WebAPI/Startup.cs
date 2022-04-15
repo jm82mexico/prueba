@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Aplicacion.Cursos;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +29,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configura la conexión a la base de datos
             services
                 .AddDbContext<CursosOnlineContext>(opt =>
                 {
@@ -33,6 +37,10 @@ namespace WebAPI
                         .UseSqlServer(Configuration
                             .GetConnectionString("DefaultConnection"));
                 });
+
+            //Configurar la inyección de dependencias
+            services.AddMediatR(typeof (Consulta.Manejador).Assembly);
+
             services.AddControllers();
         }
 
