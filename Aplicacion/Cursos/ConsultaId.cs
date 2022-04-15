@@ -1,3 +1,5 @@
+using System.Net;
+using Aplicacion.ManejadorError;
 using Dominio;
 using MediatR;
 using Persitencia;
@@ -24,6 +26,12 @@ namespace Aplicacion.Cursos
             Handle(CursoUnico request, CancellationToken cancellationToken)
             {
                 var curso = await context.Curso.FindAsync(request.Id);
+                if (curso == null)
+                {
+                    //throw new Exception("No se pudo eliminar el curso");
+                    throw new ManejadorExcepcion(HttpStatusCode.NotFound,
+                        new { mensaje = "No se encontró el curso" });
+                }
                 return curso;
             }
         }

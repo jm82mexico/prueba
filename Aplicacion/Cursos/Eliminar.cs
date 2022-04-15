@@ -1,3 +1,5 @@
+using System.Net;
+using Aplicacion.ManejadorError;
 using MediatR;
 using Persitencia;
 
@@ -26,7 +28,9 @@ namespace Aplicacion.Cursos
 
                 if (curso == null)
                 {
-                    throw new Exception("No se pudo eliminar el curso");
+                    //throw new Exception("No se pudo eliminar el curso");
+                    throw new ManejadorExcepcion(HttpStatusCode.NotFound,
+                        new { mensaje = "No se encontró el curso" });
                 }
 
                 context.Remove (curso);
