@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Dominio;
 using MediatR;
 using Persitencia;
@@ -8,6 +9,7 @@ namespace Aplicacion.Cursos
     {
         public class Ejecuta : IRequest
         {
+            [Required(ErrorMessage = "Por favor ingrese el titulo")]
             public string Titulo { get; set; }
 
             public string Descripcion { get; set; }
