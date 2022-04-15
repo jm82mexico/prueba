@@ -1,10 +1,12 @@
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 using Dominio;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persitencia
 {
-    public class CursosOnlineContext : DbContext
+    public class CursosOnlineContext : IdentityDbContext<Usuario>
     {
         public CursosOnlineContext(DbContextOptions options) :
             base(options)
@@ -13,6 +15,7 @@ namespace Persitencia
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder
                 .Entity<CursoInstructor>()
                 .HasKey(ci => new { ci.InstructorId, ci.CursoId });
