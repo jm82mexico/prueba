@@ -94,6 +94,9 @@ namespace WebAPI
             //IMPLENTAR LA INTERFAZ PARA LA GENERAR LOS TOKENS
             services.AddScoped<IJwtGenerador, JwtGenerador>();
 
+            //RECUPERAR LA INFORMACIÓN DEL USUARIO
+            services.AddScoped<IUsuarioSesion, UsuarioSesion>();
+
             services.AddControllers();
         }
 
