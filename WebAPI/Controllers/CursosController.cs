@@ -2,6 +2,8 @@ using System.Security.Cryptography;
 using Aplicacion.Cursos;
 using Dominio;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -12,6 +14,10 @@ namespace WebAPI.Controllers
     {
         //http://localhost:5132/api/Cursos
         [HttpGet]
+        [
+            Authorize(
+                AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)
+        ]
         public async Task<ActionResult<List<Curso>>> Get()
         {
             return await Mediator.Send(new Consulta.ListaCursos());
