@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.Data;
 using System.Net;
+using Aplicacion.Contratos;
 using Aplicacion.ManejadorError;
 using Dominio;
 using FluentValidation;
@@ -35,15 +37,19 @@ namespace Aplicacion.Seguridad
 
             private readonly CursosOnlineContext _context;
 
+            private readonly IJwtGenerador _jwtGenerator;
+
             public Manejador(
                 UserManager<Usuario> userManager,
                 SignInManager<Usuario> signInManager,
+                IJwtGenerador jwtGenerador,
                 CursosOnlineContext context
             )
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
                 _context = context;
+                _jwtGenerator = jwtGenerador;
             }
 
             public async Task<UsuarioData>
@@ -66,7 +72,7 @@ namespace Aplicacion.Seguridad
                 {
                     return new UsuarioData {
                         NombreCompleto = usuario.NombreCompleto,
-                        Token = "Aqui ira la data del token",
+                        Token = _jwtGenerator.CrearToken(usuario),
                         UserName = usuario.UserName,
                         Email = usuario.Email,
                         Imagen = null
