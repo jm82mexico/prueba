@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Aplicacion.Contratos;
 using Aplicacion.Cursos;
 using Dominio;
 using FluentValidation.AspNetCore;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persitencia;
+using Seguridad;
 using WebAPI.Middleware;
 
 namespace WebAPI
@@ -58,6 +60,9 @@ namespace WebAPI
             identityBuilder.AddEntityFrameworkStores<CursosOnlineContext>();
             identityBuilder.AddSignInManager<SignInManager<Usuario>>();
             services.TryAddSingleton<ISystemClock, SystemClock>();
+
+            //IMPLENTAR LA INTERFAZ PARA LA GENERACION DE TOKENS
+            services.AddScoped<IJwtGenerador, JwtGenerador>();
 
             services.AddControllers();
         }
