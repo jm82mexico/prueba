@@ -11,10 +11,12 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,7 +54,14 @@ namespace WebAPI
             //Configurar la inyección de dependencias
             services.AddMediatR(typeof (Consulta.Manejador).Assembly);
             services
-                .AddControllers()
+                .AddControllers(opt =>
+                {
+                    var policy =
+                        new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
                 .AddFluentValidation(cfg =>
                     cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
