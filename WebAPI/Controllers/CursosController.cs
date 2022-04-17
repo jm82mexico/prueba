@@ -31,6 +31,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [
+            Authorize(
+                AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)
+        ]
         public async Task<ActionResult<Unit>> Crear(Nuevo.Ejecuta data)
         {
             return await Mediator.Send(data);
